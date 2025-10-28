@@ -27,8 +27,11 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    im = SimpleImage(width, height)
-    im.fill(255, 255, 255)  # fond blanc
+    im = SimpleImage.new(width, height)
+    for x in range(width):
+        for y in range(height):
+            im.set_color((x, y), (255, 255, 255))
+
 
     # --- Paramètres ---
     n_steps = int((width * height) / 5)  # nombre de pas par ivrogne
@@ -41,9 +44,11 @@ def main():
     for color in colors:
         x, y = pos
         for _ in range(n_steps):
-            im.set_pixel(x, y, color)
-            x, y = connected_roaming((x, y), type=connexity, width=width, height=height)
-        print(f"Ivrogne {color} terminé.")
+            im.set_color((x, y), color)
+            x, y = connected_roaming((x, y), type=connexity)
+            x %= width
+            y %= height
+
 
     # --- Sauvegarde ---
     im.save(output_file)
