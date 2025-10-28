@@ -4,7 +4,7 @@
 import sys
 import random
 import time
-from simple_image import SimpleImage
+from simple_image import Image as SimpleImage
 from utils import definition_from_str, connected_roaming
 
 def main():
