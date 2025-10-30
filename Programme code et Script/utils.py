@@ -83,6 +83,14 @@ WEIGHTED_DEPS = {
         "deps": [(0, -1), (-1, 0), (1, 0), (0, 1)], # nord, ouest, est, sud
         "weights": [1, 1, 1, 1], # poids égaux
     },
+    "8-connected": {
+        # nord, nord-est, est, sud-est, sud, sud-ouest, ouest, nord-ouest
+        "deps": [
+            (0, -1), (1, -1), (1, 0), (1, 1),
+            (0, 1), (-1, 1), (-1, 0), (-1, -1)
+        ],
+        "weights": [1, 1, 1, 1, 1, 1, 1, 1],
+    },
 }
 
 
