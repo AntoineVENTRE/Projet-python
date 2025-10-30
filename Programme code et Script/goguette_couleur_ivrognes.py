@@ -40,7 +40,7 @@ def main():
             im.set_color((x, y), (255, 255, 255))
 
     # --- Paramètres ---
-    n_steps = int((width * height) )  # nombre de pas par ivrogne
+    n_steps = int((width * height) )  # nombre de pas par ivrogne je n'ai pas divisé par cinq ici pour avoir une image plus remplie
     c1 = (int(sys.argv[5]), int(sys.argv[6]), int(sys.argv[7]))
     c2 = (int(sys.argv[8]), int(sys.argv[9]), int(sys.argv[10]))
     c3 = (int(sys.argv[11]), int(sys.argv[12]), int(sys.argv[13]))

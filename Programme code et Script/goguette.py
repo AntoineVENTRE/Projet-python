@@ -19,8 +19,6 @@ def main():
     definition = definition_from_str(sys.argv[2])  # ex : "150x150" -> (150, 150)
     connexity = sys.argv[3]  # "4-connected" ou "8-connected"
     output_file = sys.argv[4]
-    print(f"Connexity utilisée : '{connexity}'")
-
 
     # --- Initialisation du hasard ---
     if seed == 0:
