@@ -17,4 +17,4 @@ echo === Tests terminés ===
 pause
 
 
-##print a faire dans le venv : .\Tests\test_goguette.bat
+##print a faire dans le terminal avec le venv activé : .\Tests\test_goguette.bat

@@ -32,6 +32,7 @@ def main():
     for x in range(width):
         for y in range(height):
             im.set_color((x, y), (255, 255, 255))
+    
     #recherche du centre de l'imagine
     xm=width//2
     ym=height//2
