@@ -17,7 +17,7 @@ def usage(msg=""):#indique comment bien renseigner les bons arguments
 def main():
     # --- Vérification des arguments ---
     if len(sys.argv) != 7:
-        print("Usage: goguette.py <seed> <definition> <connexity> <output>")
+        print("il faut renseigner: goguette.py seed/definition/connexity/output")
         sys.exit(1)
 
     # --- Récupération des paramètres ---

@@ -6,13 +6,12 @@ import sys
 import random
 import time
 from simple_image import Image as SimpleImage
-from utils import definition_from_str, connected_roaming
+from utils import definition_from_str, connected_roaming, usage
 
 def main():
     # --- Vérification des arguments ---
     if len(sys.argv) != 5:
-        print("Usage: goguette.py <seed> <definition> <connexity> <output>")
-        sys.exit(1)
+        usage("Erreur : nombre d’arguments incorrect.")
 
     # --- Récupération des paramètres ---
     seed = int(sys.argv[1])
