@@ -10,18 +10,30 @@ from utils import definition_from_str, connected_roaming
 from demo_utils import usage
 import os
 
+def creation_image_fond(width, height, color):
+    """Crée une image unie de la couleur spécifiée."""
+    im = SimpleImage.new(width, height)
+    for x in range(width):
+        for y in range(height):
+            im.set_color((x, y), color)
+    return im
 
-def usage(msg=""):#indique comment bien renseigner les bons arguments
-    print(msg)
-    print("Usage : python goguette_color_ivrogne.py <seed> <definition> <connexity> <output_file> <position_width> <position_height> ")
-    sys.exit(1)   #arrete le programme 
+def marche_ivrogne (im, pos, n_steps, connexity, color):
+    """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""
+    width, height = im.size()
+    x, y = pos
+    for _ in range(n_steps):
+        im.set_color((x, y), color)
+        x, y = connected_roaming((x, y), type=connexity)
+        x %= width
+        y %= height
+    return im 
 
 
 def main():
     # --- Vérification des arguments ---
     if len(sys.argv) != 7:
-        print("il faut renseigner: goguette.py seed/definition/connexity/output")
-        sys.exit(1)
+        usage("Erreur : nombre d’arguments incorrect.")
 
     # --- Récupération des paramètres ---
     seed = int(sys.argv[1])
@@ -31,8 +43,6 @@ def main():
     position_width =  int(sys.argv[5])
     position_height = int(sys.argv[6])
 
-
-
     # --- Initialisation du hasard ---
     if seed == 0:
         seed = time.time_ns()
@@ -41,10 +51,8 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    im = SimpleImage.new(width, height)
-    for x in range(width):
-        for y in range(height):
-            im.set_color((x, y), (255, 255, 255))
+    color = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, color)
 
     # --- Paramètres ---
     n_steps = int((width * height) / 5)  # nombre de pas par ivrogne
@@ -57,12 +65,7 @@ def main():
 
     # --- Simulation pour chaque ivrogne ---
     for color in colors:
-        x, y = pos
-        for _ in range(n_steps):
-            im.set_color((x, y), color)
-            x, y = connected_roaming((x, y), type=connexity)
-            x %= width
-            y %= height
+        im = marche_ivrogne(im, pos, n_steps, connexity, color)
 
     # --- Sauvegarde ---
     output_file = os.path.join("Images", filename)

@@ -10,6 +10,24 @@ from utils import definition_from_str, connected_roaming
 from demo_utils import usage
 import os
 
+def creation_image_fond(width, height, color):
+    """Crée une image unie de la couleur spécifiée."""
+    im = SimpleImage.new(width, height)
+    for x in range(width):
+        for y in range(height):
+            im.set_color((x, y), color)
+    return im
+
+def marche_ivrogne (im, pos, n_steps, connexity, color):
+    """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""
+    width, height = im.size()
+    x, y = pos
+    for _ in range(n_steps):
+        im.set_color((x, y), color)
+        x, y = connected_roaming((x, y), type=connexity)
+        x %= width
+        y %= height
+    return im 
 
 def main():
     # --- Vérification des arguments ---
@@ -30,10 +48,8 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    im = SimpleImage.new(width, height)
-    for x in range(width):
-        for y in range(height):
-            im.set_color((x, y), (255, 255, 255))
+    color = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, color)
 
     # --- Paramètres ---
     n_steps = int((width * height) / 5)  # nombre de pas par ivrogne
@@ -44,12 +60,7 @@ def main():
 
     # --- Simulation pour chaque ivrogne ---
     for color in colors:
-        x, y = pos
-        for _ in range(n_steps):
-            im.set_color((x, y), color)
-            x, y = connected_roaming((x, y), type=connexity)
-            x %= width
-            y %= height
+        im = marche_ivrogne(im, pos, n_steps, connexity, color)
 
     # --- Sauvegarde ---
     output_file = os.path.join("Images", filename)

@@ -10,24 +10,38 @@ from utils import definition_from_str, connected_roaming
 from demo_utils import usage 
 import os
 
+def creation_image_fond(width, height, color):
+    """Crée une image unie de la couleur spécifiée."""
+    im = SimpleImage.new(width, height)
+    for x in range(width):
+        for y in range(height):
+            im.set_color((x, y), color)
+    return im
 
-def usage(msg=""):#indique comment bien renseigner les bons arguments
-    print(msg)
-    print("Usage : python goguette_color_ivrogne.py <seed> <definition> <connexity> <output_file> "
-          "<r1> <v1> <b1> <r2> <v2> <b2> <r3> <v3> <b3>")
-    sys.exit(1)   #arrete le programme 
-
+def marche_ivrogne (im, pos, n_steps, connexity, color):
+    """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""
+    width, height = im.size()
+    x, y = pos
+    for _ in range(n_steps):
+        im.set_color((x, y), color)
+        x, y = connected_roaming((x, y), type=connexity)
+        x %= width
+        y %= height
+    return im 
 
 def main():
-    # Vérifier le nombre d’arguments
-    if len(sys.argv) != 14:
-        usage("Il faut 4 argument pour le fonctionement de la fonction et 9 entiers pour les trois couleurs RGB des ivrognes.")
-    
+    # --- Vérification des arguments ---
+    if len(sys.argv) != 14 :
+        usage("Erreur : nombre d’arguments incorrect.")
+
     # --- Récupération des paramètres ---
     seed = int(sys.argv[1])
     definition = definition_from_str(sys.argv[2])  # ex : "150x150" -> (150, 150)
     connexity = sys.argv[3]  # "4-connected" ou "8-connected"
     filename = sys.argv[4]
+    c1 = (int(sys.argv[5]), int(sys.argv[6]), int(sys.argv[7]))
+    c2 = (int(sys.argv[8]), int(sys.argv[9]), int(sys.argv[10]))
+    c3 = (int(sys.argv[11]), int(sys.argv[12]), int(sys.argv[13]))
 
     # --- Initialisation du hasard ---
     if seed == 0:
@@ -37,16 +51,10 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    im = SimpleImage.new(width, height)
-    for x in range(width):
-        for y in range(height):
-            im.set_color((x, y), (255, 255, 255))
+    im = creation_image_fond(width, height, (255, 255, 255))  # blanc
 
     # --- Paramètres ---
     n_steps = int((width * height) )  # nombre de pas par ivrogne je n'ai pas divisé par cinq ici pour avoir une image plus remplie
-    c1 = (int(sys.argv[5]), int(sys.argv[6]), int(sys.argv[7]))
-    c2 = (int(sys.argv[8]), int(sys.argv[9]), int(sys.argv[10]))
-    c3 = (int(sys.argv[11]), int(sys.argv[12]), int(sys.argv[13]))
     ivrogne_colors = [c1,c2,c3]
     
     # Position initiale des 3 ivrognes
@@ -54,12 +62,7 @@ def main():
 
     # --- Simulation pour chaque ivrogne ---
     for color in ivrogne_colors:
-        x, y = pos
-        for _ in range(n_steps):
-            im.set_color((x, y), color)
-            x, y = connected_roaming((x, y), type=connexity)
-            x %= width
-            y %= height
+        im = marche_ivrogne(im, pos, n_steps, connexity, color)
 
     # --- Sauvegarde ---
     output_file = os.path.join("Images", filename)

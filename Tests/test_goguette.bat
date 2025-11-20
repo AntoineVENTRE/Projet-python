@@ -13,7 +13,7 @@ python "Programme code et Script/dendrite.py" 2 150x150 4-connected dendrite-2.p
 python "Programme code et Script/dendrite.py" 5 150x150 8-connected dendrite-5.png
 python "Programme code et Script/dendrite.py" 100 150x150 8-connected dendrite-100.png
 
-echo === Tests terminés ===
+echo === Tests termines ===
 pause
 
 
