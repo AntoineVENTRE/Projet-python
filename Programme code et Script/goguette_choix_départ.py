@@ -55,4 +55,4 @@ def main():
     print(f"Image enregistrée sous {output_file}")
 
 if __name__ == "__main__":
-    main()
+    main() 
