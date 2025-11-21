@@ -20,7 +20,7 @@ def creation_image_fond(width, height, color):
 
 def marche_ivrogne (im, pos, n_steps, connexity, color):
     """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""
-    width, height = im.size()
+    width, height = im.width, im.height
     x, y = pos
     for _ in range(n_steps):
         im.set_color((x, y), color)

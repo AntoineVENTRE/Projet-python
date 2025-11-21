@@ -1,10 +1,32 @@
 # Dentrite
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
+#Bibliothèques nécessaires
 import sys
 import random
 import time
+import os
 from simple_image import Image as SimpleImage
-from utils import definition_from_str, connected_roaming, usage
+from utils import definition_from_str, connected_roaming
+from demo_utils import usage
+
+def creation_image_fond(width, height, color):
+    """Crée une image unie de la couleur spécifiée."""
+    im = SimpleImage.new(width, height)
+    for x in range(width):
+        for y in range(height):
+            im.set_color((x, y), color)
+    return im
+
+def voisinage_8(pos):
+    """Retourne les 8 positions voisines d'un pixel."""
+    x, y = pos
+    return [
+        (x-1, y-1), (x, y-1), (x+1, y-1),
+        (x-1, y),           (x+1, y),
+        (x-1, y+1), (x, y+1), (x+1, y+1)
+    ]
 
 def main():
     # --- Vérification des arguments ---
@@ -24,55 +46,44 @@ def main():
     print(f"Graine: {seed}")
 
     # --- Création de l'image ---
+
     width, height = definition
-    im = SimpleImage.new(width, height)
-    for x in range(width):
-        for y in range(height):
-            im.set_color((x, y), (255, 255, 255))
+    color = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, color)
 
     # Recherche du centre de l'image
     xm = width // 2
     ym = height // 2
     im.set_color((xm, ym), (0, 0, 0))
-    im._check_coordinate((xm, ym))
-    im._check_color((0, 0, 0))
-    im._pil_image.putpixel((xm, ym), (0, 0, 0))
-
+  
     # On définit le nombre d'ivrognes
     n_ivrogne = width * height // 5
 
     # Remplissage de l'image par marche aléatoire d'ivrognes
     deja_parcouru = [(xm,ym)]  # liste des positions déjà noires
 
+    for i in range(1, n_ivrogne):
+        # Position de départ aléatoire
+        x, y = random.randint(0, width-1), random.randint(0, height-1)
+        
+        # Marche aléatoire jusqu'à rencontrer un voisin noir
+        while True:
+            # Vérifier les 8 voisins
+            voisins = voisinage_8((x, y))
+            if any((vx % width, vy % height) in deja_parcouru for vx, vy in voisins):
+                im.set_color((x, y), (0, 0, 0))
+                deja_parcouru.append((x, y))
+                break
 
-    for _ in range(1, n_ivrogne):
-        pos_ivrogne = (random.randint(0, width-1), random.randint(0, height-1))
-
-        if pos_ivrogne in deja_parcouru:  # on s'assure que la position n'est pas déjà noire
-            while pos_ivrogne in deja_parcouru:
-                pos_ivrogne = (random.randint(0, width-1), random.randint(0, height-1))
-        x, y = pos_ivrogne
-        #on s'assure que l'ivrogne n'atteri pas voisin d'une position déjà noire
-        voisin_proche = [(x, y-1), (x-1, y), (x+1, y), (x, y+1), (x-1, y-1), (x-1, y+1), (x+1, y-1), (x+1, y+1)]
-        voisin_proche_noir = [pos for pos in voisin_proche if pos in deja_parcouru]
-        if pos_ivrogne in voisin_proche_noir:
-            while pos_ivrogne in voisin_proche_noir:
-                pos_ivrogne = (random.randint(0, width-1), random.randint(0, height-1))
-            
-        while pos_ivrogne not in deja_parcouru:
+            # Sinon avancer aléatoirement
             x, y = connected_roaming((x, y), type=connexity)
             x %= width
             y %= height
-            pos_ivrogne = (x, y)
-            if pos_ivrogne in deja_parcouru:
-                deja_parcouru.append(pos_ivrogne)
-                im.set_color(pos_ivrogne, (0, 0, 0))
-                im._check_coordinate(pos_ivrogne)
-                im._check_color((0, 0, 0))
-                im._pil_image.putpixel(pos_ivrogne, (0, 0, 0))
+
     
     im.save(output_file)
     print(f"Image enregistrée sous {output_file}")
+    os.startfile(output_file)
 
 
 if __name__ == "__main__":

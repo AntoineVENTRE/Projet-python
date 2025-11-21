@@ -18,3 +18,5 @@ pause
 
 
 ##print a faire dans le terminal avec le venv activé : .\Tests\test_goguette.bat
+
+python dendrite.py 1 150x150 4-connected dendrite-1.png
