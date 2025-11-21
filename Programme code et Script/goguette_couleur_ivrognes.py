@@ -9,25 +9,7 @@ from simple_image import Image as SimpleImage
 from utils import definition_from_str, connected_roaming
 from demo_utils import usage 
 import os
-
-def creation_image_fond(width, height, color):
-    """Crée une image unie de la couleur spécifiée."""
-    im = SimpleImage.new(width, height)
-    for x in range(width):
-        for y in range(height):
-            im.set_color((x, y), color)
-    return im
-
-def marche_ivrogne (im, pos, n_steps, connexity, color):
-    """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""
-    width, height = im.size()
-    x, y = pos
-    for _ in range(n_steps):
-        im.set_color((x, y), color)
-        x, y = connected_roaming((x, y), type=connexity)
-        x %= width
-        y %= height
-    return im 
+from goguette import creation_image_fond,marche_ivrogne
 
 def main():
     # --- Vérification des arguments ---
@@ -51,23 +33,26 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    im = creation_image_fond(width, height, (255, 255, 255))  # blanc
+    couleur = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, couleur)  # blanc
 
     # --- Paramètres ---
-    n_steps = int((width * height) )  # nombre de pas par ivrogne je n'ai pas divisé par cinq ici pour avoir une image plus remplie
-    ivrogne_colors = [c1,c2,c3]
+    n_pas = int((width * height) )  # nombre de pas par ivrogne je n'ai pas divisé par cinq ici pour avoir une image plus remplie
+    ivrogne_couleurs = [c1,c2,c3]
     
     # Position initiale des 3 ivrognes
     pos = (width//2, height//2)
 
     # --- Simulation pour chaque ivrogne ---
-    for color in ivrogne_colors:
-        im = marche_ivrogne(im, pos, n_steps, connexity, color)
+    for couleur in ivrogne_couleurs:
+        im = marche_ivrogne(im, pos, n_pas, connexity, couleur)
 
     # --- Sauvegarde ---
     output_file = os.path.join("Images", filename)
     im.save(output_file)
+    os.makedirs("Images", exist_ok=True)
     print(f"Image enregistrée sous {output_file}")
+    os.startfile(output_file)
 
 if __name__ == "__main__":
     main()

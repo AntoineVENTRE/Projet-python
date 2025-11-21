@@ -9,7 +9,7 @@ import os
 from simple_image import Image as SimpleImage
 from utils import definition_from_str, connected_roaming
 from demo_utils import usage
-
+from goguette import creation_image_fond,marche_ivrogne
 
 def main():
     # --- Vérification des arguments ---
@@ -37,7 +37,7 @@ def main():
             im.set_color((x, y), (255, 255, 255))
 
     # --- Paramètres ---
-    n_steps = int((width * height) / 5)  # nombre de pas par ivrogne
+    n_pas = int((width * height) / 5)  # nombre de pas par ivrogne
     
 
     # --- Position de départ : centre de l'image ---
@@ -46,7 +46,7 @@ def main():
     # --- Simulation pour chaque ivrogne ---
     for i in range(3):
         x, y = pos
-        for _ in range(n_steps):
+        for _ in range(n_pas):
             im.set_color((x, y), (random.randint(1,255), random.randint(1,255), random.randint(1,255)))
             x, y = connected_roaming((x, y), type=connexity)
             x %= width

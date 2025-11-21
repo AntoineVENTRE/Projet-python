@@ -5,10 +5,11 @@
 import sys
 import random
 import time
+import os
 from simple_image import Image as SimpleImage
 from utils import definition_from_str, connected_roaming
 from demo_utils import usage
-import os
+
 
 def creation_image_fond(width, height, color):
     """Crée une image unie de la couleur spécifiée."""
@@ -65,7 +66,9 @@ def main():
     # --- Sauvegarde ---
     output_file = os.path.join("Images", filename)
     im.save(output_file)
+    os.makedirs("Images", exist_ok=True)
     print(f"Image enregistrée sous {output_file}")
+    os.startfile(output_file)
 
 if __name__ == "__main__":
     main()

@@ -10,14 +10,7 @@ import os
 from simple_image import Image as SimpleImage
 from utils import definition_from_str, connected_roaming
 from demo_utils import usage
-
-def creation_image_fond(width, height, color):
-    """Crée une image unie de la couleur spécifiée."""
-    im = SimpleImage.new(width, height)
-    for x in range(width):
-        for y in range(height):
-            im.set_color((x, y), color)
-    return im
+from goguette import creation_image_fond,marche_ivrogne
 
 def voisinage_8(pos):
     """Retourne les 8 positions voisines d'un pixel."""
@@ -37,7 +30,7 @@ def main():
     seed = int(sys.argv[1])
     definition = definition_from_str(sys.argv[2])  # ex : "150x150" -> (150, 150)
     connexity = sys.argv[3]  # "4-connected" ou "8-connected"
-    output_file = sys.argv[4]
+    filename = sys.argv[4]
 
     # --- Initialisation du hasard ---
     if seed == 0:
@@ -48,8 +41,8 @@ def main():
     # --- Création de l'image ---
 
     width, height = definition
-    color = (255, 255, 255)  # blanc
-    im = creation_image_fond(width, height, color)
+    couleur = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, couleur)
 
     # Recherche du centre de l'image
     xm = width // 2
@@ -80,8 +73,10 @@ def main():
             x %= width
             y %= height
 
-    
+    # --- Sauvegarde ---
+    output_file = os.path.join("Images", filename)
     im.save(output_file)
+    os.makedirs("Images", exist_ok=True)
     print(f"Image enregistrée sous {output_file}")
     os.startfile(output_file)
 
