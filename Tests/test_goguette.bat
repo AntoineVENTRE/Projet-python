@@ -3,6 +3,9 @@ REM =========================================
 REM Tests pour tous les programmes Goguette puis Dendrite
 REM =========================================
 
+REM Pour lancer le test, copier-coller cette commande dans le terminal avec le venv activé :
+REM .\Tests\test_goguette.bat
+
 REM --- Tests goguette.py ---
 echo === Tests goguette.py ===
 python "Programme code et Script/goguette.py" 1 150x150 4-connected goguette-1.png
@@ -35,18 +38,9 @@ REM --- Tests goguette.py avec variation de couleurs aléatoires ---
 echo === Tests goguette.py couleur aléatoire ===
 python "Programme code et Script/goguette.py" 42 50x50 4-connected test_image.png
 
+REM --- Tests dendrite.py ---
 
-##REM --- Tests dendrite.py ---
-##echo === Tests dendrite.py ===
-##python "Programme code et Script/dendrite.py" 1 150x150 4-connected dendrite-1.png
-##python "Programme code et Script/dendrite.py" 2 150x150 4-connected dendrite-2.png
-##python "Programme code et Script/dendrite.py" 5 150x150 8-connected dendrite-5.png
-##python "Programme code et Script/dendrite.py" 100 150x150 8-connected dendrite-100.png
 
 
 REM --- Fin des tests ---
 echo === Tests terminés ===
-
-
-
-##print a faire dans le terminal avec le venv activé : .\Tests\test_goguette.bat
