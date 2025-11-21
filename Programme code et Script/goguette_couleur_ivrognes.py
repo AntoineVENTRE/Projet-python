@@ -48,11 +48,10 @@ def main():
         im = marche_ivrogne(im, pos, n_pas, connexity, couleur)
 
     # --- Sauvegarde ---
+    os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe
     output_file = os.path.join("Images", filename)
     im.save(output_file)
-    os.makedirs("Images", exist_ok=True)
     print(f"Image enregistrée sous {output_file}")
-    os.startfile(output_file)
 
 if __name__ == "__main__":
     main()

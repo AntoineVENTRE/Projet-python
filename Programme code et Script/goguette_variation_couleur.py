@@ -31,33 +31,25 @@ def main():
 
     # --- Création de l'image ---
     width, height = im.width, im.height
-    im = SimpleImage.new(width, height)
-    for x in range(width):
-        for y in range(height):
-            im.set_color((x, y), (255, 255, 255))
+    color = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, color)
 
     # --- Paramètres ---
     n_pas = int((width * height) / 5)  # nombre de pas par ivrogne
     
-
     # --- Position de départ : centre de l'image ---
     pos = (width // 2, height // 2)
 
     # --- Simulation pour chaque ivrogne ---
-    for i in range(3):
-        x, y = pos
-        for _ in range(n_pas):
-            im.set_color((x, y), (random.randint(1,255), random.randint(1,255), random.randint(1,255)))
-            x, y = connected_roaming((x, y), type=connexity)
-            x %= width
-            y %= height
+    for i in range(3):      #3 ivrognes comme dans les autres codes
+        couleur = (random.randint(1,255), random.randint(1,255), random.randint(1,255))
+        im = marche_ivrogne(im, pos, n_pas, connexity, color)
 
     # --- Sauvegarde ---
+    os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe
     output_file = os.path.join("Images", filename)
     im.save(output_file)
-    os.makedirs("Images", exist_ok=True)
     print(f"Image enregistrée sous {output_file}")
-    os.startfile(output_file)
 
 if __name__ == "__main__":
     main()

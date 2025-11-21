@@ -36,7 +36,7 @@ def main():
     im = creation_image_fond(width, height, color)
 
     # --- Paramètres ---
-    n_steps = int((width * height) / 5)  # nombre de pas par ivrogne
+    n_pas = int((width * height) / 5)  # nombre de pas par ivrogne
     couleurs = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]  # R, G, B
 
     # --- Position de départ : centre de l'image ---
@@ -46,14 +46,13 @@ def main():
 
     # --- Simulation pour chaque ivrogne ---
     for couleur in couleurs:
-        im = marche_ivrogne(im, pos, n_steps, connexity, couleur)
+        im = marche_ivrogne(im, pos, n_pas, connexity, couleur)
 
     # --- Sauvegarde ---
+    os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe
     output_file = os.path.join("Images", filename)
     im.save(output_file)
-    os.makedirs("Images", exist_ok=True)
     print(f"Image enregistrée sous {output_file}")
-    os.startfile(output_file)
 
 if __name__ == "__main__":
     main()
