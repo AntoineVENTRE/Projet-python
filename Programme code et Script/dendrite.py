@@ -50,10 +50,10 @@ def main():
     deja_parcouru = [(xm, ym)]
 
     #Nombre ivrognes
-    n_ivrogne = width * height // 5
+    n_ivrogne = width * height // 20
 
     # Limite anti-boucle infinie
-    pas_max = width * height * 4
+    pas_max = width * height //2
 
     for i in range(1, n_ivrogne):
         x, y = random.randint(0, width-1), random.randint(0, height-1)
