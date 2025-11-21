@@ -30,9 +30,9 @@ def main():
     print(f"Graine: {seed}")
 
     # --- Création de l'image ---
-    width, height = im.width, im.height
-    color = (255, 255, 255)  # blanc
-    im = creation_image_fond(width, height, color)
+    width, height = definition
+    couleur = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, couleur)
 
     # --- Paramètres ---
     n_pas = int((width * height) / 5)  # nombre de pas par ivrogne
@@ -43,7 +43,7 @@ def main():
     # --- Simulation pour chaque ivrogne ---
     for i in range(3):      #3 ivrognes comme dans les autres codes
         couleur = (random.randint(1,255), random.randint(1,255), random.randint(1,255))
-        im = marche_ivrogne(im, pos, n_pas, connexity, color)
+        im = marche_ivrogne(im, pos, n_pas, connexity, couleur)
 
     # --- Sauvegarde ---
     os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe
