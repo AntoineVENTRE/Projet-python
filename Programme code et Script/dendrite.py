@@ -39,7 +39,6 @@ def main():
     print(f"Graine: {seed}")
 
     # --- Création de l'image ---
-
     width, height = definition
     couleur = (255, 255, 255)  # blanc
     im = creation_image_fond(width, height, couleur)
@@ -48,37 +47,38 @@ def main():
     xm = width // 2
     ym = height // 2
     im.set_color((xm, ym), (0, 0, 0))
-  
+    
+    # liste des positions déjà noires
+    deja_parcouru = [(xm,ym)]  
+
     # On définit le nombre d'ivrognes
     n_ivrogne = width * height // 5
 
     # Remplissage de l'image par marche aléatoire d'ivrognes
-    deja_parcouru = [(xm,ym)]  # liste des positions déjà noires
+    pas_max = width * height * 4
 
     for i in range(1, n_ivrogne):
         # Position de départ aléatoire
         x, y = random.randint(0, width-1), random.randint(0, height-1)
-        
         # Marche aléatoire jusqu'à rencontrer un voisin noir
-        while True:
-            # Vérifier les 8 voisins
+        pas = 0
+        while pas < pas_max:
             voisins = voisinage_8((x, y))
             if any((vx % width, vy % height) in deja_parcouru for vx, vy in voisins):
                 im.set_color((x, y), (0, 0, 0))
                 deja_parcouru.append((x, y))
                 break
-
             # Sinon avancer aléatoirement
             x, y = connected_roaming((x, y), type=connexity)
             x %= width
             y %= height
+            pas += 1    
 
     # --- Sauvegarde ---
+    os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe
     output_file = os.path.join("Images", filename)
     im.save(output_file)
-    os.makedirs("Images", exist_ok=True)
     print(f"Image enregistrée sous {output_file}")
-    os.startfile(output_file)
 
 
 if __name__ == "__main__":
