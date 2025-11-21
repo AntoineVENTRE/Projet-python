@@ -1,6 +1,6 @@
 @echo off
 REM =========================================
-REM Tests pour tous les programmes Goguette et Dendrite
+REM Tests pour tous les programmes Goguette puis Dendrite
 REM =========================================
 
 REM --- Tests goguette.py ---
@@ -9,13 +9,6 @@ python "Programme code et Script/goguette.py" 1 150x150 4-connected goguette-1.p
 python "Programme code et Script/goguette.py" 2 150x150 4-connected goguette-2.png
 python "Programme code et Script/goguette.py" 5 150x150 8-connected goguette-5.png
 python "Programme code et Script/goguette.py" 100 150x150 8-connected goguette-100.png
-
-REM --- Tests dendrite.py ---
-echo === Tests dendrite.py ===
-python "Programme code et Script/dendrite.py" 1 150x150 4-connected dendrite-1.png
-python "Programme code et Script/dendrite.py" 2 150x150 4-connected dendrite-2.png
-python "Programme code et Script/dendrite.py" 5 150x150 8-connected dendrite-5.png
-python "Programme code et Script/dendrite.py" 100 150x150 8-connected dendrite-100.png
 
 REM --- Tests goguette_choix_depart.py ---
 echo === Tests goguette_choix_depart.py ===
@@ -41,6 +34,15 @@ python "Programme code et Script/goguette_variation_couleur.py" 100 150x150 8-co
 REM --- Tests goguette.py avec variation de couleurs aléatoires ---
 echo === Tests goguette.py couleur aléatoire ===
 python "Programme code et Script/goguette.py" 42 50x50 4-connected test_image.png
+
+
+##REM --- Tests dendrite.py ---
+##echo === Tests dendrite.py ===
+##python "Programme code et Script/dendrite.py" 1 150x150 4-connected dendrite-1.png
+##python "Programme code et Script/dendrite.py" 2 150x150 4-connected dendrite-2.png
+##python "Programme code et Script/dendrite.py" 5 150x150 8-connected dendrite-5.png
+##python "Programme code et Script/dendrite.py" 100 150x150 8-connected dendrite-100.png
+
 
 REM --- Fin des tests ---
 echo === Tests terminés ===
