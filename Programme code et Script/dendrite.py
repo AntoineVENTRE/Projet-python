@@ -69,9 +69,10 @@ def main():
 
             # Ne doit pas être voisin d’un pixel noir
             voisins = voisinage_8((x, y))
-            voisins_toriques = [(vx % width, vy % height) for vx, vy in voisins]
+            voisins_valides = [(vx, vy) for vx, vy in voisins if 0 <= vx < width and 0 <= vy < height]
 
-            if any(v in deja_parcouru for v in voisins_toriques):
+
+            if any(v in deja_parcouru for v in voisins_valides):
                 continue
 
             # Point de départ valide trouvé
@@ -95,10 +96,12 @@ def main():
                 break
 
             # Sinon marche aléatoire
-            x, y = connected_roaming((x, y), type=connexity)
-            x %= width
-            y %= height
-            pas += 1
+            nx, ny = connected_roaming((x, y), type=connexity)
+            # Vérifie qu’on reste dans l’image
+            if 0 <= nx < width and 0 <= ny < height:
+                x, y = nx, ny
+            else:
+                break  # si on sort, on arrête l'ivrogne
 
         # Si pas >= pas_max → l’ivrogne est perdu (on ne dépose rien)
 
