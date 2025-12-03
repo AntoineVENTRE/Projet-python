@@ -71,7 +71,7 @@ def main():
             if (x, y) in deja_parcouru:
                 continue
 
-            if any(v in deja_parcouru for v in voisins_toriques):
+            if any(v in deja_parcouru for v in voisinage_8((x, y))):
                 continue
 
             break
