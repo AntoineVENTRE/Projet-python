@@ -34,7 +34,7 @@ def main():
     # --- Initialisation du hasard ---
     if seed == 0:
         seed = time.time_ns()
-    random.seed(seed)S
+    random.seed(seed)
     print(f"Graine: {seed}")
 
     #Paramètres 
