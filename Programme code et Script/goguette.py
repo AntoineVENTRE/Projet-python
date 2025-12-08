@@ -8,7 +8,7 @@ import time
 import os
 from simple_image import Image as SimpleImage
 from utils import definition_from_str, connected_roaming
-from demo_utils import usage
+from demo_utils import usage,fill_with_color
 
 def marche_ivrogne(im, pos, n_steps, connexity, color, width, height):
     """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""  
@@ -54,7 +54,8 @@ if __name__ == "__main__":
     # Création de l'image 
     width, height = definition
     color_fond = (255, 255, 255)
-    im = SimpleImage.new(width, height, color_fond)
+    im = SimpleImage.new(width, height)  
+    fill_with_color(im, color_fond)
 
     # Appel de la fonction goguette
     goguette(im, n_ivrognes=3, connexity=connexity, width=width, height=height)

@@ -8,7 +8,7 @@ import time
 import os
 from simple_image import Image as SimpleImage
 from utils import definition_from_str
-from demo_utils import usage
+from demo_utils import usage,fill_with_color
 from goguette import marche_ivrogne, goguette
 
 if __name__ == "__main__":
@@ -33,7 +33,8 @@ if __name__ == "__main__":
     # Création de l'image 
     width, height = definition
     color_fond = (255, 255, 255)
-    im = SimpleImage.new(width, height, color_fond)
+    im = SimpleImage.new(width, height)  
+    fill_with_color(im, color_fond)
 
     # Vérification position
     if not (0 <= position_width < width and 0 <= position_height < height):
