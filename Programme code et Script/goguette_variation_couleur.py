@@ -31,19 +31,19 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    couleur = (255, 255, 255)  # blanc
-    im = creation_image_fond(width, height, couleur)
+    color_fond = (255, 255, 255)  # blanc
+    im = creation_image_fond(width, height, color_fond)
 
     # --- Paramètres ---
-    n_pas = int((width * height) / 5)  # nombre de pas par ivrogne
+    n_step = int((width * height) / 5)  # nombre de pas par ivrogne
     
     # --- Position de départ : centre de l'image ---
     pos = (width // 2, height // 2)
 
     # --- Simulation pour chaque ivrogne ---
     for i in range(3):      #3 ivrognes comme dans les autres codes
-        couleur = (random.randint(1,255), random.randint(1,255), random.randint(1,255))
-        im = marche_ivrogne(im, pos, n_pas, connexity, couleur)
+        color = (random.randint(1,255), random.randint(1,255), random.randint(1,255))
+        im = marche_ivrogne(im, pos, n_step, connexity, color,width,height)
 
     # --- Sauvegarde ---
     os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe

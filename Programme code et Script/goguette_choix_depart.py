@@ -37,7 +37,7 @@ def main():
 
     # --- Paramètres ---
     n_pas = int((width * height) / 5)  # nombre de pas par ivrogne
-    couleurs = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]  # R, G, B
+    colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]  # R, G, B
 
     # --- Position de départ : centre de l'image ---
     if not (0 <= position_width < width and 0 <= position_height < height):
@@ -45,8 +45,8 @@ def main():
     pos = (position_width, position_height)
 
     # --- Simulation pour chaque ivrogne ---
-    for couleur in couleurs:
-        im = marche_ivrogne(im, pos, n_pas, connexity, couleur)
+    for color in colors:
+        im = marche_ivrogne(im, pos, n_pas, connexity, color,width,height)
 
     # --- Sauvegarde ---
     os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe

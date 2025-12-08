@@ -37,10 +37,6 @@ python "Programme code et Script/goguette_variation_couleur.py" 2 "150x150" "4-c
 python "Programme code et Script/goguette_variation_couleur.py" 5 "150x150" "8-connected" "goguette_var_couleur-0005.png"
 python "Programme code et Script/goguette_variation_couleur.py" 100 "150x150" "8-connected" "goguette_var_couleur-000100.png"
 
-REM --- Tests goguette.py couleur aleatoire ---
-echo === Tests goguette.py couleur aleatoire ===
-python "Programme code et Script/goguette.py" 42 "50x50" "4-connected" "test_image.png"
-
 REM --- Tests dendrite.py ---
 echo === Tests dendrite.py ===
 python "Programme code et Script/dendrite.py" 1 "150x150" "8-connected" "dendrite-00001.png"
