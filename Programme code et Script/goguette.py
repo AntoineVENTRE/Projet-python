@@ -9,13 +9,6 @@ from simple_image import Image as SimpleImage
 from utils import definition_from_str, connected_roaming
 from demo_utils import usage
 
-def creation_image_fond(width, height, color): 
-    """Crée une image unie de la couleur spécifiée.""" 
-    im = SimpleImage.new(width, height) 
-    for x in range(width): 
-        for y in range(height): 
-            im.set_color((x, y), color) 
-    return im 
 
 def marche_ivrogne (im, pos, n_steps, connexity, color,width,height): 
     """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""  
@@ -24,12 +17,13 @@ def marche_ivrogne (im, pos, n_steps, connexity, color,width,height):
         im.set_color((x, y), color) 
         x, y = connected_roaming((x, y), type=connexity) 
         x %= width 
-        y%= height 
+        y %= height 
     return im 
 
 def main(): 
     # --- Vérification des arguments --- 
-    if len(sys.argv) != 5: usage("Erreur : nombre d’arguments incorrect.") 
+    if len(sys.argv) != 5: 
+        usage("Erreur : nombre d’arguments incorrect.") 
     
     # --- Récupération des paramètres --- 
     seed = int(sys.argv[1]) 
@@ -46,10 +40,10 @@ def main():
     # --- Création de l'image ---
     width, height = definition
     color_fond = (255, 255, 255) # blanc 
-    im = creation_image_fond(width, height, color_fond) 
+    im = SimpleImage.new(width,height, color_fond) 
     
     # --- Paramètres --- 
-    n_step = int((width * height) / 5) # nombre de pas par ivrogne 
+    n_steps = int((width * height) / 5) # nombre de pas par ivrogne 
     colors_ivrognes = [(255, 0, 0), (0, 255, 0), (0, 0, 255)] # R, G, B 
     
     # --- Position de départ : centre de l'image --- 
@@ -57,7 +51,7 @@ def main():
     
     # --- Simulation pour chaque ivrogne --- 
     for color in colors_ivrognes: 
-        im = marche_ivrogne(im, pos, n_step, connexity, color,width,height) 
+        marche_ivrogne(im, pos, n_steps, connexity, color, width, height) 
     
     # --- Sauvegarde ---
     os.makedirs("Images", exist_ok=True)

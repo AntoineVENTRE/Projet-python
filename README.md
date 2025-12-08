@@ -14,3 +14,5 @@ Ce projet simule des balades aléatoires (“balade de l’ivrogne”) pour prod
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
+
+.... 

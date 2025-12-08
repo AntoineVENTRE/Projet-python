@@ -32,8 +32,8 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    color = (255, 255, 255)  # blanc
-    im = creation_image_fond(width, height, color)
+    color_fond = (255, 255, 255)  # blanc
+    im = SimpleImage.new(width,height, color_fond)
 
     # --- Paramètres ---
     n_pas = int((width * height) / 5)  # nombre de pas par ivrogne
@@ -46,7 +46,7 @@ def main():
 
     # --- Simulation pour chaque ivrogne ---
     for color in colors:
-        im = marche_ivrogne(im, pos, n_pas, connexity, color,width,height)
+        marche_ivrogne(im, pos, n_pas, connexity, color,width,height)
 
     # --- Sauvegarde ---
     os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe

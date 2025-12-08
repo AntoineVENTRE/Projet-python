@@ -33,11 +33,11 @@ def main():
 
     # --- Création de l'image ---
     width, height = definition
-    couleur = (255, 255, 255)  # blanc
-    im = creation_image_fond(width, height, couleur)  # blanc
+    color_fond = (255, 255, 255)  # blanc
+    im = SimpleImage.new(width,height, color_fond)
 
     # --- Paramètres ---
-    n_step = int((width * height) )  # nombre de pas par ivrogne je n'ai pas divisé par cinq ici pour avoir une image plus remplie
+    n_steps = int((width * height) / 5) # nombre de pas par ivrogne
     colors_ivrognes = [c1,c2,c3]
     
     # Position initiale des 3 ivrognes
@@ -45,7 +45,7 @@ def main():
 
     # --- Simulation pour chaque ivrogne ---
     for color in colors_ivrognes :
-        im = marche_ivrogne(im, pos, n_step, connexity, color,width,height)
+        im = marche_ivrogne(im, pos, n_steps, connexity, color,width,height)
 
     # --- Sauvegarde ---
     os.makedirs("Images", exist_ok=True)     # garantit que le dossier existe
