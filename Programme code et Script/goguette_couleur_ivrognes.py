@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # Création de l'image
     width, height = definition
     color_fond = (255, 255, 255)
-    im = SimpleImage.new(width, height, color_fond)
+    im = SimpleImage.new(width, height)
     fill_with_color(im, color_fond)
 
     # Simulation avec goguette personnalisée 
