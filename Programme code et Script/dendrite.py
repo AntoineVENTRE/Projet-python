@@ -6,21 +6,20 @@ import random
 import time
 import os
 from simple_image import Image as SimpleImage
-from utils import connected_roaming, WEIGHTED_DEPS,get_random_xy
+from utils import connected_roaming, WEIGHTED_DEPS,get_random_xy,definition_from_str
 from demo_utils import usage,decode_argv,fill_with_color
 
-def get_voisins(pos, connex, width, height):
+def get_voisins(pos, connexity, width, height):
     """Retourne la liste des voisins d'une position selon la connexité."""
     x, y = pos
     voisins = []
     # Récupère les déplacements depuis WEIGHTED_DEPS
-    deps = WEIGHTED_DEPS[connex]["deps"]
+    deps = WEIGHTED_DEPS[connexity]["deps"]
     for dx, dy in deps:
         # Le modulo prend en compte le monde torique pour la vérification des voisins
         nx = (x + dx) % width
         ny = (y + dy) % height
         voisins.append((nx, ny))
-    
     return voisins
 
 def est_voisin_de_noir(pos, connex, width, height, points_noirs):
@@ -30,7 +29,6 @@ def est_voisin_de_noir(pos, connex, width, height, points_noirs):
         if v in points_noirs:
             return True
     return False
-
 
 def position_depart_valide(im, connex, points_noirs, nb_pixels):
     """Trouve une position de départ valide pour un ivrogne (pas sur un point noir pas voisin 
@@ -42,7 +40,6 @@ def position_depart_valide(im, connex, points_noirs, nb_pixels):
         if pos not in points_noirs and not est_voisin_de_noir(pos, connex, width, height, points_noirs):
             return pos
     return None # Impossible de trouver une position valide
-
 
 def marche_ivrogne(im, pos_depart, connex, points_noirs, nb_pixels):
     """Fait marcher un ivrogne jusqu'à ce qu'il arrive à proximité d'un point noir."""
@@ -68,9 +65,7 @@ def dendrite(im, nb_ivrognes, connex):
     centre = (im.width // 2, im.height // 2)
     points_noirs.append(centre)
     im.set_color(centre, (0, 0, 0))
-    # Déposer les ivrognes un par un
-    for i in range(nb_ivrognes):
-        # Trouver une position de départ valide
+    for i in range(nb_ivrognes): # Déposer les ivrognes un par un
         pos_depart = position_depart_valide(im, connex, points_noirs, nb_pixels)
         # Si pas de point valide trouvé, on passe à l'ivrogne suivant
         if pos_depart is not None:
@@ -87,31 +82,42 @@ def dendrite(im, nb_ivrognes, connex):
                     points_noirs.append(pos_arrivee)
                     im.set_color(pos_arrivee, (0, 0, 0))
 
-
 if __name__ == "__main__":
+
+    # Vérification des arguments
+    if len(sys.argv) != 5:
+        usage("Erreur : nombre d’arguments incorrect.")
+
     # Récupération des arguments de la ligne de commande
-    seed, definition, connex, im_name = decode_argv()
+    seed = int(sys.argv[1])
+    definition = definition_from_str(sys.argv[2])  # ex : "150x150" -> (150, 150)
+    connexity = sys.argv[3]  # "4-connected" ou "8-connected"
+    filename = sys.argv[4]
+
+    # Initialisation du hasard 
     if seed == 0:
         seed = time.time_ns()
+    random.seed(seed)
+    print(f"Graine: {seed}")
     
     # Calcul du nombre d'ivrognes (1/5 du nombre de pixels)
-    nb_pixels = definition[0] * definition[1]
+    width, height = definition
+    nb_pixels =  width * height
     nb_ivrognes = nb_pixels // 5
-    
-    print(f"Graine: {seed}")
-    print(f"Définition: {definition[0]}x{definition[1]}")
-    print(f"Connexité: {connex}")
-    print(f"Image à créer: {im_name}")
 
     # Initialisation du générateur aléatoire
+    if seed == 0:
+        seed = time.time_ns()
     random.seed(seed)
+    print(f"Graine: {seed}")
         
     # Préparation de l'image
-    im = SimpleImage.new(*definition)
-    fill_with_color(im, (255, 255, 255))
+    color_fond = (255, 255, 255)
+    im = SimpleImage.new(width, height)
+    fill_with_color(im, color_fond)
 
     # Croissance de la dendrite 
-    dendrite(im, nb_ivrognes, connex)
+    dendrite(im, nb_ivrognes, connexity)
     
     # Sauvegarde 
     os.makedirs("Images", exist_ok=True)
