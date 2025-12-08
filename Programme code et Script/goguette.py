@@ -35,31 +35,31 @@ def goguette(im, n_ivrognes, connexity, width, height):
 
 
 if __name__ == "__main__":
-    # --- Vérification des arguments ---
+    # Vérification des arguments 
     if len(sys.argv) != 5:
         usage("Erreur : nombre d’arguments incorrect.")
 
-    # --- Récupération des paramètres ---
+    # Récupération des paramètres 
     seed = int(sys.argv[1])
     definition = definition_from_str(sys.argv[2])  # ex : "150x150" -> (150, 150)
     connexity = sys.argv[3]  # "4-connected" ou "8-connected"
     filename = sys.argv[4]
 
-    # --- Initialisation du hasard ---
+    # Initialisation du hasard 
     if seed == 0:
         seed = time.time_ns()
     random.seed(seed)
     print(f"Graine: {seed}")
 
-    # --- Création de l'image ---
+    # Création de l'image 
     width, height = definition
     color_fond = (255, 255, 255)
     im = SimpleImage.new(width, height, color_fond)
 
-    # --- Appel de la fonction goguette ---
+    # Appel de la fonction goguette
     goguette(im, n_ivrognes=3, connexity=connexity, width=width, height=height)
 
-    # --- Sauvegarde ---
+    # Sauvegarde 
     os.makedirs("Images", exist_ok=True)
     output_file = os.path.join("Images", filename)
     im.save(output_file)
