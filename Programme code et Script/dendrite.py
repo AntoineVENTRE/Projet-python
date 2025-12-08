@@ -110,8 +110,11 @@ if __name__ == "__main__":
     im = SimpleImage.new(*definition)
     fill_with_color(im, (255, 255, 255))
 
-    # Croissance de la dendrite
+    # Croissance de la dendrite 
     dendrite(im, nb_ivrognes, connex)
     
-    # Enregistrement de l'image finale
-    im.save(im_name)
+    # Sauvegarde 
+    os.makedirs("Images", exist_ok=True)
+    output_file = os.path.join("Images", filename)
+    im.save(output_file)
+    print(f"Image enregistrée sous {output_file}")

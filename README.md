@@ -18,3 +18,5 @@ pip install -r requirements.txt
 git add .
 git commit -m "upload"
 git push
+
+.\Tests\test_goguette.bat
