@@ -76,19 +76,40 @@ def marche_ivrogne(im, pos_depart, connex, points_noirs):
         pos = (pos[0] % width, pos[1] % height) # Assurer le monde torique
     return None  # L'ivrogne est perdu
 
-
 def dendrite(im, nb_ivrognes, connex):
+    """
+    Simule la croissance d'une dendrite.
+    Le nombre d'ivrognes est 1/5 du nombre total de pixels.
+    Utilisation d'un set pour les points noirs pour des recherches rapides.
+    """
+    width, height = im.width, im.height
+
+    # Ensemble des points noirs
     points_noirs = set()
-    centre = (im.width//2, im.height//2)
+
+    # Placer le germe central
+    centre = (width // 2, height // 2)
     points_noirs.add(centre)
-    im.set_color(centre, (0,0,0))
+    im.set_color(centre, (0, 0, 0))
+
+    # Déposer les ivrognes un par un
     for _ in range(nb_ivrognes):
-        pos = position_depart_valide(im, connex, points_noirs)
-        if pos is None: continue
-        pos_fin = marche_ivrogne(im, pos, connex, points_noirs)
-        if pos_fin and pos_fin not in points_noirs:
-            points_noirs.add(pos_fin)
-            im.set_color(pos_fin, (0,0,0))
+        # 1) Trouver une position de départ valide
+        pos_depart = position_depart_valide(im, connex, points_noirs)
+
+        # Vérifier que la position de départ existe
+        if pos_depart is None:
+            continue
+
+        # 2) Faire marcher l'ivrogne jusqu'à proximité d'un point noir
+        pos_arrivee = marche_ivrogne(im, pos_depart, connex, points_noirs)
+
+        # 3) Ajouter le point noir si nécessaire
+        if pos_arrivee is not None and pos_arrivee not in points_noirs:
+            points_noirs.add(pos_arrivee)
+            im.set_color(pos_arrivee, (0, 0, 0))
+
+
 
 if __name__ == "__main__":
     seed, definition, connex, filename = decode_argv()
