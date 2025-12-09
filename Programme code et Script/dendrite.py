@@ -55,7 +55,6 @@ def dendrite(im, nb_ivrognes, connex):
             points_noirs.add(pos_fin)
             im.set_color(pos_fin, (0,0,0))
 
-
 if __name__ == "__main__":
     seed, definition, connex, filename = decode_args()
     if seed==0: seed = int(time.time_ns())
