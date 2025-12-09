@@ -3,44 +3,79 @@ import sys
 import random
 import os
 import time
-from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS
+from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS,positive_int_from_str
 from simple_image import Image
 from demo_utils import usage,fill_with_color
 
-def decode_args():      #color--> connex
-    if len(sys.argv) != 5:
-        usage("Nombre d'arguments incorrect")
-    seed = int(sys.argv[1])
+def decode_argv():
+    """Décode le contenu de la ligne de commande (sys.argv) et retourne tous
+    les éléments analysés
+    """
+    # le nombre d'arguments (le nom du script + 4 arguments)
+    len(sys.argv) == 5 or usage("Nombre d'arguments incorrect")
+    # le 1er argument est la graine (un entier positif)
+    seed = positive_int_from_str(sys.argv[1])
+    seed != None or usage(f"Graine incorrecte: '{sys.argv[1]}'")
+    # le 2e argument est une définition d'image (de la forme 800x600)
     definition = definition_from_str(sys.argv[2])
-    connex = sys.argv[3]
-    if connex not in ["4-connected","8-connected"]:
-        usage(f"Connexité incorrecte: '{connex}'")
+    definition != None or usage(f"Définition incorrecte: '{sys.argv[2]}'")
+    if definition[0] < 30 or definition[1] < 30:
+        usage(f"Définition minimum: 30x30")
+    # le 3e argument est la connexité
+    connex = str(sys.argv[3])
+    if connex not in ['4-connected', '8-connected']:
+        usage(f"Connexité incorrecte: '{sys.argv[3]}' (doit être '4-connected' ou '8-connected')")
+    # le 4e argument est le chemin d'un fichier image à créer
     filename = sys.argv[4]
     return seed, definition, connex, filename
 
-def get_voisins(pos, connex, width, height):
-    x,y = pos
-    deps = WEIGHTED_DEPS[connex]["deps"]
-    return [((x+dx)%width, (y+dy)%height) for dx,dy in deps]
+def get_voisins(pos, connexity, width, height):
+    """Retourne la liste des voisins d'une position selon la connexité."""
+    x, y = pos
+    voisins = []
+    # Récupère les déplacements depuis WEIGHTED_DEPS
+    deps = WEIGHTED_DEPS[connexity]["deps"]
+    for dx, dy in deps:
+        # Le modulo prend en compte le monde torique pour la vérification des voisins
+        nx = (x + dx) % width
+        ny = (y + dy) % height
+        voisins.append((nx, ny))
+    return voisins
+
 
 def est_voisin_de_noir(pos, connex, width, height, points_noirs):
-    return any(v in points_noirs for v in get_voisins(pos, connex, width, height))
+    """Vérifie si la position est voisine d'un point noir."""
+    voisins = get_voisins(pos, connex, width, height)
+    for v in voisins:
+        if v in points_noirs:
+            return True
+    return False
 
 def position_depart_valide(im, connex, points_noirs):
-    for _ in range(im.width * im.height):
+    """Trouve une position de départ valide pour un ivrogne (pas sur un point noir pas voisin 
+    d'un point noir """
+    max_tentatives = nb_pixels  #on limite le nombre de tentatives
+    width, height = im.width, im.height
+    for _ in range(max_tentatives):
         pos = get_random_xy(im)
-        if pos not in points_noirs and not est_voisin_de_noir(pos, connex, im.width, im.height, points_noirs):
+        if pos not in points_noirs and not est_voisin_de_noir(pos, connex, width, height, points_noirs):
             return pos
-    return None
+    return None # Impossible de trouver une position valide
 
-def marche_ivrogne(im, pos, connex, points_noirs):
-    max_pas = 10 * im.width * im.height
+
+def marche_ivrogne(im, pos_depart, connex, points_noirs):
+    """Fait marcher un ivrogne jusqu'à ce qu'il arrive à proximité d'un point noir."""
+    pos = pos_depart
+    width = im.width
+    height = im.height
+    max_pas = 10 * height * width 
     for _ in range(max_pas):
-        if est_voisin_de_noir(pos, connex, im.width, im.height, points_noirs):
+        if est_voisin_de_noir(pos, connex, width, height, points_noirs):
             return pos
         pos = connected_roaming(pos, type=connex)
-        pos = (pos[0]%im.width, pos[1]%im.height)
-    return None
+        pos = (pos[0] % width, pos[1] % height) # Assurer le monde torique
+    return None  # L'ivrogne est perdu
+
 
 def dendrite(im, nb_ivrognes, connex):
     points_noirs = set()
@@ -56,7 +91,7 @@ def dendrite(im, nb_ivrognes, connex):
             im.set_color(pos_fin, (0,0,0))
 
 if __name__ == "__main__":
-    seed, definition, connex, filename = decode_args()
+    seed, definition, connex, filename = decode_argv()
     if seed==0: seed = int(time.time_ns())
     random.seed(seed)
     width,height = definition
