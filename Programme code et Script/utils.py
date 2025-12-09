@@ -84,14 +84,21 @@ WEIGHTED_DEPS = {
         "weights": [1, 1, 1, 1], # poids égaux
     },
     "8-connected": {
-        # nord, nord-est, est, sud-est, sud, sud-ouest, ouest, nord-ouest
+        # sud, diagonales sud, axes horizontaux, diagonales nord, nord
         "deps": [
-            (0, -1), (1, -1), (1, 0), (1, 1),
-            (0, 1), (-1, 1), (-1, 0), (-1, -1)
+            (-1, -1),  # bas-gauche (anciennement nord-ouest)
+            (0, -1),   # bas
+            (1, -1),   # bas-droite
+            (-1, 0),   # gauche
+            (1, 0),    # droite
+            (-1, 1),   # haut-gauche
+            (0, 1),    # haut
+            (1, 1),    # haut-droite
         ],
         "weights": [1, 1, 1, 1, 1, 1, 1, 1],
     },
 }
+
 
 
 def connected_roaming(position, type="4-connected"):
