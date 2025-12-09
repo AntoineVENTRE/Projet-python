@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-import sys, random, os, time
+import sys
+import random
+import os
+import time
 from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS
 from simple_image import Image
+from demo_utils import usage,fill_with_color
 
-def usage(msg):
-    print(f"{msg}\nUsage: {sys.argv[0]} <seed> <definition> <connex> <image_out>")
-    sys.exit(1)
-
-def decode_args():
+def decode_args():      #color--> connex
     if len(sys.argv) != 5:
         usage("Nombre d'arguments incorrect")
     seed = int(sys.argv[1])
@@ -17,11 +17,6 @@ def decode_args():
         usage(f"Connexité incorrecte: '{connex}'")
     filename = sys.argv[4]
     return seed, definition, connex, filename
-
-def fill_with_color(im, color=(255,255,255)):
-    for x in range(im.width):
-        for y in range(im.height):
-            im.set_color((x,y), color)
 
 def get_voisins(pos, connex, width, height):
     x,y = pos
@@ -60,6 +55,7 @@ def dendrite(im, nb_ivrognes, connex):
             points_noirs.add(pos_fin)
             im.set_color(pos_fin, (0,0,0))
 
+
 if __name__ == "__main__":
     seed, definition, connex, filename = decode_args()
     if seed==0: seed = int(time.time_ns())
@@ -69,7 +65,8 @@ if __name__ == "__main__":
     nb_ivrognes = nb_pixels//5
 
     im = Image.new(width, height)
-    fill_with_color(im)
+    color=(255, 255, 255)
+    fill_with_color(im,color)
 
     dendrite(im, nb_ivrognes, connex)
 
