@@ -39,8 +39,8 @@ python "Programme code et Script/goguette_variation_couleur.py" 100 "150x150" "8
 
 REM --- Tests dendrite.py ---
 echo === Tests dendrite.py ===
-python "Programme code et Script/dendrite.py" 1 "150x150" "8-connected" "dendrite-00001.png"
-python "Programme code et Script/dendrite.py" 2 "150x150" "8-connected" "dendrite-00002.png"
+python "Programme code et Script/dendrite.py" 1 "150x150" "4-connected" "dendrite-00001.png"
+python "Programme code et Script/dendrite.py" 2 "150x150" "4-connected" "dendrite-00002.png"
 python "Programme code et Script/dendrite.py" 5 "150x150" "8-connected" "dendrite-00005.png"
 python "Programme code et Script/dendrite.py" 100 "150x150" "8-connected" "dendrite-0000100.png"
 
