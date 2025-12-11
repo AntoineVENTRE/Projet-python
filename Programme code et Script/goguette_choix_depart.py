@@ -7,9 +7,10 @@ import random
 import time
 import os
 from simple_image import Image as SimpleImage
-from utils import definition_from_str
+from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS,positive_int_from_str
 from demo_utils import usage,fill_with_color
-from goguette import marche_ivrogne, goguette
+from goguette import goguette
+from fonction_utile import marche_ivrogne
 
 if __name__ == "__main__":
     # Vérification des arguments
