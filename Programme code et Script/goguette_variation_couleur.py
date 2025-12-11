@@ -10,7 +10,7 @@ from simple_image import Image as SimpleImage
 from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS,positive_int_from_str
 from demo_utils import usage,fill_with_color
 from goguette import goguette
-from fonction_utile import marche_ivrogne
+from fonction_utile import marche_ivrogne_goguette
 
 
 if __name__ == "__main__":
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     for _ in range(3):  # 3 ivrognes
         color = (random.randint(1, 255), random.randint(1, 255), random.randint(1, 255))
-        marche_ivrogne(im, pos, n_steps, connexity, color, width, height)
+        marche_ivrogne_goguette(im, pos, n_steps, connexity, color, width, height)
 
     # Sauvegarde
     os.makedirs("Images", exist_ok=True)
