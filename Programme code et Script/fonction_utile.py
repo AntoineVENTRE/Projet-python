@@ -10,7 +10,7 @@ from simple_image import Image as SimpleImage
 from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS,positive_int_from_str
 from demo_utils import usage,fill_with_color
 
-def marche_ivrogne(im, pos, n_steps, connexity, color, width, height):
+def marche_ivrogne_goguette(im, pos, n_steps, connexity, color, width, height):
     """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""  
     x, y = pos
     for _ in range(n_steps):
@@ -21,7 +21,7 @@ def marche_ivrogne(im, pos, n_steps, connexity, color, width, height):
     return im
 
 
-def decode_argv():
+def decode_args():
     """Décode le contenu de la ligne de commande (sys.argv) et retourne tous
     les éléments analysés
     """
@@ -80,7 +80,7 @@ def position_depart_valide(im, connex, points_noirs):
     return None # Impossible de trouver une position valide
 
 
-def marche_ivrogne_noir(im, pos_depart, connex, points_noirs):       #renommer en marche_ivrogne_noir
+def marche_ivrogne_dendrite(im, pos_depart, connex, points_noirs):       #renommer en marche_ivrogne_noir
     """Fait marcher un ivrogne jusqu'à ce qu'il arrive à proximité d'un point noir."""
     pos = pos_depart
     width = im.width

@@ -9,7 +9,7 @@ import os
 from simple_image import Image as SimpleImage
 from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS,positive_int_from_str
 from demo_utils import usage,fill_with_color
-from fonction_utile import marche_ivrogne
+from fonction_utile import marche_ivrogne_goguette
 
 def goguette(im, n_ivrognes, connexity, width, height):
     """Fonction principale "goguette" avec plusieurs ivrognes."""
@@ -22,7 +22,7 @@ def goguette(im, n_ivrognes, connexity, width, height):
 
     # Simulation pour chaque ivrogne
     for color in colors:
-        marche_ivrogne(im, pos, n_steps, connexity, color, width, height)
+        marche_ivrogne_goguette(im, pos, n_steps, connexity, color, width, height)
 
 
 if __name__ == "__main__":

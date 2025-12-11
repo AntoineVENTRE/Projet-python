@@ -6,7 +6,7 @@ import time
 from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS,positive_int_from_str
 from simple_image import Image
 from demo_utils import usage,fill_with_color
-from fonction_utile import decode_argv,position_depart_valide,marche_ivrogne_noir
+from fonction_utile import decode_args,position_depart_valide,marche_ivrogne_dendrite
 
 def dendrite(im, nb_ivrognes, connex):
     """
@@ -34,7 +34,7 @@ def dendrite(im, nb_ivrognes, connex):
             continue
 
         # 2) Faire marcher l'ivrogne jusqu'à proximité d'un point noir
-        pos_arrivee = marche_ivrogne_noir(im, pos_depart, connex, points_noirs)
+        pos_arrivee = marche_ivrogne_dendrite(im, pos_depart, connex, points_noirs)
 
         # 3) Ajouter le point noir si nécessaire
         if pos_arrivee is not None and pos_arrivee not in points_noirs:
@@ -43,7 +43,7 @@ def dendrite(im, nb_ivrognes, connex):
 
 
 if __name__ == "__main__":
-    seed, definition, connex, filename = decode_argv()
+    seed, definition, connex, filename = decode_args()
     if seed==0: seed = int(time.time_ns())
     random.seed(seed)
     width,height = definition
