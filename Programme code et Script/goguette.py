@@ -7,18 +7,9 @@ import random
 import time
 import os
 from simple_image import Image as SimpleImage
-from utils import definition_from_str, connected_roaming
+from utils import connected_roaming, get_random_xy, definition_from_str, WEIGHTED_DEPS,positive_int_from_str
 from demo_utils import usage,fill_with_color
-
-def marche_ivrogne(im, pos, n_steps, connexity, color, width, height):
-    """Effectue une marche aléatoire d’un seul ivrogne sur l’image."""  
-    x, y = pos
-    for _ in range(n_steps):
-        im.set_color((x, y), color)
-        x, y = connected_roaming((x, y), type=connexity)
-        x %= width
-        y %= height
-    return im
+from fonction_utile import marche_ivrogne
 
 def goguette(im, n_ivrognes, connexity, width, height):
     """Fonction principale "goguette" avec plusieurs ivrognes."""
