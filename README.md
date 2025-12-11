@@ -15,6 +15,8 @@ python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 
+##Commande utile
+
 git add .
 git commit -m "upload"
 git push
