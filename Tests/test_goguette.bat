@@ -27,7 +27,8 @@ echo === Tests goguette_couleur_ivrognes.py ===
 python "Programme code et Script/goguette_couleur_ivrognes.py" 1 150x150 4-connected goguette_couleur-001.png 255 0 0 0 0 255 100 100 100
 python "Programme code et Script/goguette_couleur_ivrognes.py" 2 150x150 4-connected goguette_couleur-002.png 60 180 90 30 15 75 200 200 200
 python "Programme code et Script/goguette_couleur_ivrognes.py" 5 150x150 8-connected goguette_couleur-005.png 200 50 100 150 250 0 50 50 50
-python "Programme code et Script/goguette_couleur_ivrognes.py" 100 150x150 8-connected goguette_couleur-00100.png 0 0 0 255 255 255 128 128 128
+python "Programme code et Script/goguette_couleur_ivrognes.py" 100 150x150 8-connected goguette_couleur-00100.png 230 30 80 20 120 200 250 200 20
+
 
 
 REM --- Tests goguette_variation_couleur.py ---
